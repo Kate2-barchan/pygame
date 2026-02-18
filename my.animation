@@ -1,0 +1,49 @@
+import pygame as pg
+
+FPS = 60
+WIDTH, HEIGHT = 700, 700
+WHITE = (210, 224, 247)
+SKY_BLUE = (89, 129, 222)
+RIGHT_UP, LEFT_DOWN = 'right-up','left-down'
+
+pg.init()
+screen = pg.display.set_mode((WIDTH, HEIGHT))
+pg.display.set_caption("Игра")
+clock = pg.time.Clock()
+
+screen.fill(WHITE)
+r = 50
+x = 0 + r
+y = HEIGHT - r
+pg.draw.circle(screen, SKY_BLUE, (x, y), r)
+pg.display.update()
+
+flag_move = RIGHT_UP
+flag_play = True
+while flag_play:
+    clock.tick(FPS)
+
+    for event in pg.event.get():
+        if event.type == pg.QUIT:
+            pg.quit()
+            flag_play = False
+            break
+    if not flag_play:
+        break
+
+
+    if flag_move == RIGHT_UP:
+        x += 2
+        y -= 2
+    elif flag_move == LEFT_DOWN:
+        x -= 2
+        y += 2
+
+    if x >= (WIDTH - r) or y <= (0 + r):
+        flag_move = LEFT_DOWN
+    elif x <= (0 + r) or y >= (HEIGHT - r):
+        flag_move = RIGHT_UP
+
+    screen.fill(WHITE)
+    pg.draw.circle(screen, SKY_BLUE, (x, y), r)
+    pg.display.update()
